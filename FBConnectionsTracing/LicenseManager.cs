@@ -32,7 +32,7 @@ namespace FBConnectionsTracing
         {
             get
             {
-                return 30;
+                return 1;
             }
         }
 
