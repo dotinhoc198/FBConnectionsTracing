@@ -27,7 +27,10 @@ namespace FBConnectionsTracing
                 if (usedDays >= LicenseManager.Instance.TrialDays)
                 {
                     RegisterForm frm = new RegisterForm();
-                    frm.ErrorMessage = string.Format("Thời gian dùng thử {0} ngày của bạn đã hết.\nVui lòng nhập khóa bản quyền để tiếp tục sử dụng.\nLiên hệ Đô Tin Học(@dotinhoc198) để nhận khóa.", LicenseManager.Instance.TrialDays);
+                    if(LicenseManager.Instance.TrialDays > 0)
+                        frm.ErrorMessage = string.Format("Thời gian dùng thử {0} ngày của bạn đã hết.\nVui lòng nhập khóa bản quyền để tiếp tục sử dụng.\nLiên hệ Đô Tin Học(@dotinhoc198) để nhận khóa.", LicenseManager.Instance.TrialDays);
+                    else
+                        frm.ErrorMessage = string.Format("Vui lòng nhập khóa bản quyền để tiếp tục sử dụng.\nLiên hệ Đô Tin Học(@dotinhoc198) để nhận khóa.", LicenseManager.Instance.TrialDays);
                     frm.RequestKey = LicenseManager.Instance.GetMachineUniqueIndentifier(true);
                     if(frm.ShowDialog() != DialogResult.OK)
                         return;

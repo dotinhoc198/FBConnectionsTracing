@@ -32,7 +32,7 @@ namespace FBConnectionsTracing
         {
             get
             {
-                return 1;
+                return 0;
             }
         }
 
@@ -76,12 +76,12 @@ namespace FBConnectionsTracing
                 if (fileVer != null)
                 {
                     this.ProductName = fileVer.ProductName;
-                    this.RegistryPath = string.Format("SOFTWARE\\{0}\\{1}", fileVer.CompanyName, fileVer.ProductName);
+                    this.RegistryPath = string.Format("SOFTWARE\\Classes\\{0}", this.ComputeMD5Hash(fileVer.ProductName, false)).ToLower();
                 }
             }
 
             if (this.RegistryPath == string.Empty)
-                this.RegistryPath = string.Format("SOFTWARE\\NKTUYEN\\FBConnectionsTracing");
+                this.RegistryPath = string.Format("SOFTWARE\\Classes\\{0}", this.ComputeMD5Hash("FBConnectionsTracing", false)).ToLower();
 
             if (this.ProductName == string.Empty)
                 this.ProductName = "FBConnectionsTracing";

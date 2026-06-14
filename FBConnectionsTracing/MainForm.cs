@@ -11,6 +11,7 @@ using HtmlAgilityPack;
 using System.Linq;
 using System.Diagnostics;
 using System.Web;
+using Microsoft.Win32;
 
 namespace FBConnectionsTracing
 {
@@ -124,8 +125,117 @@ namespace FBConnectionsTracing
             return true;
         }
 
+        private bool SaveSettings()
+        {
+            string strRegiastryPath = string.Format("SOFTWARE\\DOTINHOC198\\{0}", LicenseManager.Instance.ProductName);
+            RegistryKey regKey = null;
+
+            try
+            {
+                regKey = Registry.CurrentUser.CreateSubKey(strRegiastryPath, RegistryKeyPermissionCheck.ReadWriteSubTree);
+            }
+            catch (System.Exception ex)
+            {
+                Debug.Print(ex.Message);
+                regKey = null;
+            }
+
+            if (regKey == null)
+                return false;
+
+            try
+            {
+                regKey.SetValue("txtFollowedFile", txtFollowedFile.Text);
+                regKey.SetValue("txtMyFollowers", txtMyFollowers.Text);
+                regKey.SetValue("chbShowFollowed", chbShowFollowed.Checked ? 1 : 0);
+                regKey.SetValue("chbHighlightNonFollowed", chbHighlightNonFollowed.Checked ? 1 : 0);
+                regKey.SetValue("chbStartIndex", chbStartIndex.Checked ? 1 : 0);
+                regKey.SetValue("chbEndIndex", chbEndIndex.Checked ? 1 : 0);
+                regKey.SetValue("txtStartIndex", txtStartIndex.Text);
+                regKey.SetValue("txtEndIndex", txtEndIndex.Text);
+            }
+            catch (System.Exception ex2)
+            {
+                Debug.Print(ex2.Message);
+            }
+
+            return true;
+        }
+
+        private bool LoadSettings()
+        {
+            string strRegiastryPath = string.Format("SOFTWARE\\DOTINHOC198\\{0}", LicenseManager.Instance.ProductName);
+            RegistryKey regKey = null;
+
+            try
+            {
+                regKey = Registry.CurrentUser.CreateSubKey(strRegiastryPath, RegistryKeyPermissionCheck.ReadWriteSubTree);
+            }
+            catch (System.Exception ex)
+            {
+                Debug.Print(ex.Message);
+                regKey = null;
+            }
+
+            if (regKey == null)
+                return false;
+
+            try
+            {
+                object objMyFollowersText = null;
+                object objFollowedFileText = null;
+                object objShowFollowedCheckbox = null;
+                object objHighlightNonFollowedCheckbox = null;
+                object objStartIndexCheckbox = null;
+                object objEndIndexCheckbox = null;
+                object objStartIndexText = null;
+                object objEndIndexText = null;
+
+                objMyFollowersText = regKey.GetValue("txtMyFollowers");
+                if (objMyFollowersText != null)
+                    txtMyFollowers.Text = objMyFollowersText.ToString();
+
+                objFollowedFileText = regKey.GetValue("txtFollowedFile");
+                if (objFollowedFileText != null)
+                    txtFollowedFile.Text = objFollowedFileText.ToString();
+
+                objShowFollowedCheckbox = regKey.GetValue("chbShowFollowed");
+                if (objShowFollowedCheckbox != null)
+                    chbShowFollowed.Checked = (int)objShowFollowedCheckbox == 1;
+
+                objHighlightNonFollowedCheckbox = regKey.GetValue("chbHighlightNonFollowed");
+                if (objHighlightNonFollowedCheckbox != null)
+                    chbHighlightNonFollowed.Checked = (int)objHighlightNonFollowedCheckbox == 1;
+
+                objStartIndexCheckbox = regKey.GetValue("chbStartIndex");
+                if (objStartIndexCheckbox != null)
+                    chbStartIndex.Checked = (int)objStartIndexCheckbox == 1;
+
+                objEndIndexCheckbox = regKey.GetValue("chbEndIndex");
+                if (objEndIndexCheckbox != null)
+                    chbEndIndex.Checked = (int)objEndIndexCheckbox == 1;
+
+                objStartIndexText = regKey.GetValue("txtStartIndex");
+                if (objStartIndexText != null)
+                    txtStartIndex.Text = objStartIndexText.ToString();
+
+                objEndIndexText = regKey.GetValue("txtEndIndex");
+                if (objEndIndexText != null)
+                    txtEndIndex.Text = objEndIndexText.ToString();
+
+            }
+            catch (System.Exception ex2)
+            {
+                Debug.Print(ex2.Message);
+            }
+
+            return true;
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
+            LoadSettings();
+
             this.Text = string.Format("{0} v{1} - Công cụ báo cáo danh sách những người không theo dõi mình trên Facebook - © 2026 Đô Tin Học(dotinhoc198)", ProductName, ProductVersion);
         }
 
@@ -485,6 +595,8 @@ namespace FBConnectionsTracing
         {
             if (bgw.IsBusy)
                 bgw.CancelAsync();
+
+            SaveSettings();
         }
 
         private void btnExportList_Click(object sender, EventArgs e)
