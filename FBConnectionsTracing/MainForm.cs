@@ -235,7 +235,7 @@ namespace FBConnectionsTracing
         private void MainForm_Load(object sender, EventArgs e)
         {
             LoadSettings();
-
+            btnIncreaseNumber.Enabled = btnDecreaseNumber.Enabled = txtStartIndex.MaskedTextProvider.AssignedEditPositionCount > 0 && txtEndIndex.MaskedTextProvider.AssignedEditPositionCount > 0 && chbStartIndex.Checked && chbEndIndex.Checked;
             this.Text = string.Format("{0} v{1} - Công cụ báo cáo danh sách những người không theo dõi mình trên Facebook - © 2026 Đô Tin Học(dotinhoc198)", ProductName, ProductVersion);
         }
 
@@ -247,6 +247,7 @@ namespace FBConnectionsTracing
                 txtStartIndex.Focus();
                 txtStartIndex.SelectAll();
             }
+            btnIncreaseNumber.Enabled = btnDecreaseNumber.Enabled = txtStartIndex.MaskedTextProvider.AssignedEditPositionCount > 0 && txtEndIndex.MaskedTextProvider.AssignedEditPositionCount > 0 && chbStartIndex.Checked && chbEndIndex.Checked;
         }
 
         private void chbEndIndex_CheckedChanged(object sender, EventArgs e)
@@ -257,6 +258,7 @@ namespace FBConnectionsTracing
                 txtEndIndex.Focus();
                 txtEndIndex.SelectAll();
             }
+            btnIncreaseNumber.Enabled = btnDecreaseNumber.Enabled = txtStartIndex.MaskedTextProvider.AssignedEditPositionCount > 0 && txtEndIndex.MaskedTextProvider.AssignedEditPositionCount > 0 && chbStartIndex.Checked && chbEndIndex.Checked;
         }
 
         private void txtFollowedFile_TextChanged(object sender, EventArgs e)
@@ -764,6 +766,64 @@ namespace FBConnectionsTracing
         private void openYoutubeLink_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process proc1 = System.Diagnostics.Process.Start("https://www.youtube.com/@dotinhoc198");
+        }
+
+        private void txtStartIndex_KeyUp(object sender, KeyEventArgs e)
+        {
+            btnIncreaseNumber.Enabled = btnDecreaseNumber.Enabled = txtStartIndex.MaskedTextProvider.AssignedEditPositionCount > 0 && txtEndIndex.MaskedTextProvider.AssignedEditPositionCount > 0 && chbStartIndex.Checked && chbEndIndex.Checked;
+        }
+
+        private void txtEndIndex_KeyUp(object sender, KeyEventArgs e)
+        {
+            btnIncreaseNumber.Enabled = btnDecreaseNumber.Enabled = txtStartIndex.MaskedTextProvider.AssignedEditPositionCount > 0 && txtEndIndex.MaskedTextProvider.AssignedEditPositionCount > 0 && chbStartIndex.Checked && chbEndIndex.Checked;
+        }
+
+        private void btnIncreaseNumber_Click(object sender, EventArgs e)
+        {
+            int nStartIndex = int.Parse(txtStartIndex.Text);
+            int nEndIndex = int.Parse(txtEndIndex.Text);
+            int nSpan = nEndIndex - nStartIndex;
+
+            if (nSpan > 0)
+            {
+                nStartIndex += (nSpan+1);
+                nEndIndex = nStartIndex + nSpan;
+
+                txtStartIndex.Text = nStartIndex.ToString();
+                txtEndIndex.Text = nEndIndex.ToString();
+            }
+        }
+
+        private void btnDecreaseNumber_Click(object sender, EventArgs e)
+        {
+            int nStartIndex = int.Parse(txtStartIndex.Text);
+            int nEndIndex = int.Parse(txtEndIndex.Text);
+            int nSpan = nEndIndex - nStartIndex;
+
+            if (nSpan > 0)
+            {
+                nStartIndex -= (nSpan+1);
+                if (nStartIndex < 1)
+                    nStartIndex = 1;
+                nEndIndex = nStartIndex + nSpan;
+
+                txtStartIndex.Text = nStartIndex.ToString();
+                txtEndIndex.Text = nEndIndex.ToString();
+            }
+        }
+
+        private void txtStartIndex_Enter(object sender, EventArgs e)
+        {
+            txtStartIndex.Invoke((MethodInvoker)delegate {
+                txtStartIndex.SelectAll();
+            });
+        }
+
+        private void txtEndIndex_Enter(object sender, EventArgs e)
+        {
+            txtEndIndex.Invoke((MethodInvoker)delegate {
+                txtEndIndex.SelectAll();
+            });
         }
     }
 }

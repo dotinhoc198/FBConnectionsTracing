@@ -37,6 +37,8 @@
             this.btnFollowedFileBrowse = new System.Windows.Forms.Button();
             this.btnMyFollowersBrowse = new System.Windows.Forms.Button();
             this.grpOptions = new System.Windows.Forms.GroupBox();
+            this.btnIncreaseNumber = new System.Windows.Forms.Button();
+            this.btnDecreaseNumber = new System.Windows.Forms.Button();
             this.txtEndIndex = new System.Windows.Forms.MaskedTextBox();
             this.txtStartIndex = new System.Windows.Forms.MaskedTextBox();
             this.chbHighlightNonFollowed = new System.Windows.Forms.CheckBox();
@@ -126,6 +128,8 @@
             // 
             // grpOptions
             // 
+            this.grpOptions.Controls.Add(this.btnIncreaseNumber);
+            this.grpOptions.Controls.Add(this.btnDecreaseNumber);
             this.grpOptions.Controls.Add(this.txtEndIndex);
             this.grpOptions.Controls.Add(this.txtStartIndex);
             this.grpOptions.Controls.Add(this.chbHighlightNonFollowed);
@@ -140,6 +144,28 @@
             this.grpOptions.TabStop = false;
             this.grpOptions.Text = "Tùy chọn";
             // 
+            // btnIncreaseNumber
+            // 
+            this.btnIncreaseNumber.Enabled = false;
+            this.btnIncreaseNumber.Location = new System.Drawing.Point(713, 44);
+            this.btnIncreaseNumber.Name = "btnIncreaseNumber";
+            this.btnIncreaseNumber.Size = new System.Drawing.Size(28, 22);
+            this.btnIncreaseNumber.TabIndex = 11;
+            this.btnIncreaseNumber.Text = "ᴠ";
+            this.btnIncreaseNumber.UseVisualStyleBackColor = true;
+            this.btnIncreaseNumber.Click += new System.EventHandler(this.btnIncreaseNumber_Click);
+            // 
+            // btnDecreaseNumber
+            // 
+            this.btnDecreaseNumber.Enabled = false;
+            this.btnDecreaseNumber.Location = new System.Drawing.Point(713, 21);
+            this.btnDecreaseNumber.Name = "btnDecreaseNumber";
+            this.btnDecreaseNumber.Size = new System.Drawing.Size(28, 22);
+            this.btnDecreaseNumber.TabIndex = 10;
+            this.btnDecreaseNumber.Text = "ᴧ";
+            this.btnDecreaseNumber.UseVisualStyleBackColor = true;
+            this.btnDecreaseNumber.Click += new System.EventHandler(this.btnDecreaseNumber_Click);
+            // 
             // txtEndIndex
             // 
             this.txtEndIndex.Enabled = false;
@@ -149,6 +175,8 @@
             this.txtEndIndex.Name = "txtEndIndex";
             this.txtEndIndex.Size = new System.Drawing.Size(64, 20);
             this.txtEndIndex.TabIndex = 9;
+            this.txtEndIndex.Enter += new System.EventHandler(this.txtEndIndex_Enter);
+            this.txtEndIndex.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtEndIndex_KeyUp);
             // 
             // txtStartIndex
             // 
@@ -159,6 +187,8 @@
             this.txtStartIndex.Name = "txtStartIndex";
             this.txtStartIndex.Size = new System.Drawing.Size(64, 20);
             this.txtStartIndex.TabIndex = 7;
+            this.txtStartIndex.Enter += new System.EventHandler(this.txtStartIndex_Enter);
+            this.txtStartIndex.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtStartIndex_KeyUp);
             // 
             // chbHighlightNonFollowed
             // 
@@ -265,7 +295,7 @@
             this.btnReport.Location = new System.Drawing.Point(926, 163);
             this.btnReport.Name = "btnReport";
             this.btnReport.Size = new System.Drawing.Size(100, 66);
-            this.btnReport.TabIndex = 10;
+            this.btnReport.TabIndex = 12;
             this.btnReport.Text = "&BÁO CÁO";
             this.btnReport.UseVisualStyleBackColor = true;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
@@ -277,7 +307,7 @@
             this.btnExportList.Location = new System.Drawing.Point(926, 484);
             this.btnExportList.Name = "btnExportList";
             this.btnExportList.Size = new System.Drawing.Size(100, 68);
-            this.btnExportList.TabIndex = 11;
+            this.btnExportList.TabIndex = 13;
             this.btnExportList.Text = "&XUẤT RA TỆP";
             this.btnExportList.UseVisualStyleBackColor = true;
             this.btnExportList.Click += new System.EventHandler(this.btnExportList_Click);
@@ -353,7 +383,7 @@
             this.lvReport.ShowGroups = false;
             this.lvReport.ShowItemToolTips = true;
             this.lvReport.Size = new System.Drawing.Size(768, 389);
-            this.lvReport.TabIndex = 5;
+            this.lvReport.TabIndex = 14;
             this.lvReport.UseCompatibleStateImageBehavior = false;
             this.lvReport.View = System.Windows.Forms.View.Details;
             this.lvReport.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.lvReport_DrawColumnHeader);
@@ -449,6 +479,8 @@
         private System.Windows.Forms.ToolStripMenuItem openFacebookLink;
         private System.Windows.Forms.ToolStripMenuItem openTiktokLink;
         private System.Windows.Forms.ToolStripMenuItem openYoutubeLink;
+        private System.Windows.Forms.Button btnIncreaseNumber;
+        private System.Windows.Forms.Button btnDecreaseNumber;
     }
 }
 
